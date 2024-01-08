@@ -134,6 +134,12 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="Src\Entity\Bluebird.Interfaces.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Juros.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Multa.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Types.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Desconto.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Callback.pas"/>
+        <DCCReference Include="Src\Entity\Bluebird.Divisao.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

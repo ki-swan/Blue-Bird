@@ -3,34 +3,42 @@ unit Bluebird.Interfaces;
 interface
 
 uses
-  System.Generics.Collections;
+  System.Generics.Collections,
+  System.JSON, Bluebird.Types;
 
 type
 
-TFormaPagamento = (fp_indefinido, fp_boleto, fp_cartao, fp_pix);
-
-iBluebirdDisconto = interface
+iBluebirdDesconto = interface
 ['{206F6128-FB83-42B1-990E-CF6569A5B5B4}']
-  function Valor(aValue : Currency) : iBluebirdDisconto; overload;
-  function Valor : Currency; overload;
-  function DiasAntesDoVencimento(aValue : Int32) : iBluebirdDisconto; overload;
+  function Valor(aValue : Int64) : iBluebirdDesconto; overload;
+  function Valor : Int64; overload;
+  function DiasAntesDoVencimento(aValue : Int32) : iBluebirdDesconto; overload;
   function DiasAntesDoVencimento : Int32; overload;
-  function Tipo(aValue : String) : iBluebirdDisconto; overload;
-  function Tipo : String; overload;
+  function Tipo(aValue : TTipoValor) : iBluebirdDesconto; overload;
+  function Tipo : TTipoValor; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdDesconto;
+  function ToJSON : TJSONObject;
 end;
 
 iBluebirdJuros = interface
 ['{BBDDF47E-8BA4-4CC2-A94A-C3986A8B62B6}']
   function ValorAoMes(aPorcentagem : Double) : iBluebirdJuros; overload;
   function ValorAoMes : Double; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdJuros;
+  function ToJSON : TJSONObject;
 end;
 
 iBluebirdMulta = interface
 ['{013B7B3D-0087-4CA2-B801-EFAB6273A2C3}']
-  function Valor(aPorcentagem : Double) : iBluebirdMulta; overload;
+  function Valor(aValor : Double) : iBluebirdMulta; overload;
   function Valor : Double; overload;
-  function Tipo(aValue : String) : iBluebirdMulta; overload;
-  function Tipo : String; overload;
+  function Tipo(aValue : TTipoValor) : iBluebirdMulta; overload;
+  function Tipo : TTipoValor; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdMulta;
+  function ToJSON : TJSONObject;
 end;
 
 iBluebirdDivisao = interface
@@ -43,6 +51,9 @@ iBluebirdDivisao = interface
   function ValorPercentual : Double; overload;
   function ValorFixoTotal(aValue : Currency) : iBluebirdDivisao; overload;
   function ValorFixoTotal : Currency; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdDivisao;
+  function ToJSON : TJSONObject;
 end;
 
 iBluebirdCallback = interface
@@ -51,6 +62,9 @@ iBluebirdCallback = interface
   function SucessoURL : String; overload;
   function AutoRedirecionar(aValor : Boolean) : iBluebirdCallback; overload;
   function AutoRedirecionar : Boolean; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdCallback;
+  function ToJSON : TJSONObject;
 end;
 
 iBluebirdCobranca = interface
@@ -75,8 +89,8 @@ iBluebirdCobranca = interface
   function ValorTotalParcelas : Currency; overload;
   function ValorParcela(aValor : Currency) : iBluebirdCobranca; overload;
   function ValorParcela : Currency; overload;
-  function Desconto(aValor : iBluebirdDisconto) : iBluebirdCobranca; overload;
-  function Desconto : iBluebirdDisconto; overload;
+  function Desconto(aValor : iBluebirdDesconto) : iBluebirdCobranca; overload;
+  function Desconto : iBluebirdDesconto; overload;
   function Multa(aValor : iBluebirdMulta) : iBluebirdCobranca; overload;
   function Multa : iBluebirdMulta; overload;
   function ServicoPostal(aValor : Boolean) : iBluebirdCobranca; overload;
@@ -85,6 +99,9 @@ iBluebirdCobranca = interface
   function Divisao : TList<iBluebirdDivisao>; overload;
   function Callback(aValor : iBluebirdCallback) : iBluebirdCobranca; overload;
   function Callback : iBluebirdCallback; overload;
+
+  function FromJSON(aValue : TJSONObject) : iBluebirdCobranca;
+  function ToJSON : TJSONObject;
 end;
 
 implementation
