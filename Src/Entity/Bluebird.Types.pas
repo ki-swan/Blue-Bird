@@ -32,7 +32,6 @@ end;
 function TTipoValorHelper.ToString: string;
 begin
   case Self of
-    tv_none: Result := '';
     tv_fixo: Result := 'FIXED';
     tv_porcentagem: Result := 'PERCENTAGE';
     else Result := '';
@@ -53,7 +52,6 @@ end;
 function TFormaPagamentoHelper.ToString: string;
 begin
   case Self of
-    fp_indefinido: Result := 'UNDEFINED';
     fp_boleto: Result := 'BOLETO';
     fp_cartao: Result := 'CREDIT_CARD';
     fp_pix: Result := 'PIX';
