@@ -3,7 +3,7 @@ unit Bluebird.Cliente;
 interface
 
 uses
-  Bluebird.Interfaces, System.JSON, Bluebird.Types;
+  System.JSON, Bluebird.Clientes.Interfaces, System.Classes, Bluebird.Clientes.types;
 
 type
 
@@ -21,6 +21,7 @@ strict protected
   FpostalCode: string;
   FexternalReference: string;
   FnotificationDisabled : Boolean;
+  FadditionalEmails : TStringList;
   FmunicipalInscription : string;
   FstateInscription : string;
   Fobservations : string;
@@ -28,7 +29,7 @@ strict protected
   Fcompany : string;
 
   Fid : string;
-  FdateCreated : TDate;
+  FdateCreated : String;
   Fcity : Integer;
   Fstate : string;
   Fcountry : string;
@@ -88,6 +89,9 @@ end;
 
 implementation
 
+uses
+  System.SysUtils;
+
 { TBluebirdCliente }
 
 constructor TBluebirdCliente.Create;
@@ -104,15 +108,25 @@ begin
   FpostalCode := '';
   FexternalReference := '';
   FnotificationDisabled := False;
+  FadditionalEmails := TStringList.Create;
   FmunicipalInscription := '';
   FstateInscription := '';
   Fobservations := '';
   FgroupName := '';
   Fcompany := '';
+
+  Fid := '';
+//  FdateCreated := TDate;
+  Fcity := 0;
+  Fstate := '';
+  Fcountry := '';
+  FpersonType := tp_indefinido;
+  Fdeleted := False;
 end;
 
 destructor TBluebirdCliente.Destroy;
 begin
+  FreeAndNil(FadditionalEmails);
 
   inherited;
 end;
@@ -128,22 +142,24 @@ end;
 
 function TBluebirdCliente.dateCreated: TDate;
 begin
-
+  Result := StrToDate(FdateCreated);
 end;
 
 function TBluebirdCliente.deleted: Boolean;
 begin
-
+  Result := Fdeleted;
 end;
 
 function TBluebirdCliente.address(aValue: string): iBluebirdCliente;
 begin
-
+  Result := Self;
+  if aValue = EmptyStr then raise Exception.Create('Valor address inserido vazio');
+  Faddress := aValue;
 end;
 
 function TBluebirdCliente.address: string;
 begin
-
+  Result := Faddress;
 end;
 
 function TBluebirdCliente.addressNumber(aValue: string): iBluebirdCliente;
@@ -246,8 +262,7 @@ begin
 
 end;
 
-function TBluebirdCliente.municipalInscription(
-  aValue: string): iBluebirdCliente;
+function TBluebirdCliente.municipalInscription(aValue: string): iBluebirdCliente;
 begin
 
 end;
@@ -272,8 +287,7 @@ begin
 
 end;
 
-function TBluebirdCliente.notificationDisabled(
-  aValue: Boolean): iBluebirdCliente;
+function TBluebirdCliente.notificationDisabled(aValue: Boolean): iBluebirdCliente;
 begin
 
 end;
