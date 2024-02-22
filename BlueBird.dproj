@@ -89,9 +89,9 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Src\Entity\Bluebird.Interfaces.pas"/>
-        <DCCReference Include="Src\Entity\Bluebird.Cliente.pas"/>
-        <DCCReference Include="Src\Entity\Bluebird.Types.pas"/>
+        <DCCReference Include="Src\Clientes\Bluebird.Cliente.pas"/>
+        <DCCReference Include="Src\Clientes\Bluebird.Clientes.Interfaces.pas"/>
+        <DCCReference Include="Src\Clientes\Bluebird.Clientes.types.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
